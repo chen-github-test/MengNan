@@ -8,7 +8,7 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class VideoActivity extends AppCompatActivity {
-
+    private static final String TAG = "VideoActivity";
     private VideoView videoView;
 
     @Override
@@ -18,17 +18,21 @@ public class VideoActivity extends AppCompatActivity {
 
         videoView = findViewById(R.id.video_view);
 
-        // 获取 raw 目录下的视频文件
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sample1);
-        videoView.setVideoURI(videoUri);
-
-        MediaController mediaController = new MediaController(this);
-        mediaController.setMediaPlayer(videoView);
-        videoView.setMediaController(mediaController);
-
-        videoView.setOnPreparedListener(mp -> {
-            mp.setVolume(1.0f, 1.0f); // 设置声音最大
-            videoView.start(); // 自动播放
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.sample1;
+        Uri uri = Uri.parse(videoPath);
+        videoView.setVideoURI(uri);
+        videoView.setMediaController(new MediaController(this));
+        videoView.setOnPreparedListener(mediaPlayer -> {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (videoView != null) {
+            videoView.stopPlayback();
+        }
     }
 }

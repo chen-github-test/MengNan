@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
 
     <application
         android:allowBackup="true"
@@ -37,7 +41,12 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".VideoPlaybackService"></service>
+        <service android:name=".VideoPlaybackService">
+
+        </service>
+        <service android:name=".CountdownService">
+
+        </service>
     </application>
 
 </manifest>
